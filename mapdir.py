@@ -98,16 +98,22 @@ def main():
         default="json",
         help="Output format",
     )
+    parser.add_argument(
+        "--directory",
+        type=str,
+        default=os.getcwd(),
+        help="Path to the directory to map (default: current working directory)",
+    )
     args = parser.parse_args()
 
-    current_directory = os.getcwd()
-    gitignore_path = os.path.join(current_directory, ".gitignore")
+    directory_to_map = os.path.abspath(args.directory)  # Resolve full path
+    gitignore_path = os.path.join(directory_to_map, ".gitignore")
 
-    print("Starting directory mapping...")
+    print(f"Starting directory mapping for {directory_to_map}...")
     pathspec = load_gitignore_patterns(gitignore_path)
-    mapped_structure = map_directory(current_directory, pathspec)
+    mapped_structure = map_directory(directory_to_map, pathspec)
 
-    output_path = os.path.join(current_directory, f"structure.{args.format}")
+    output_path = os.path.join(directory_to_map, f"structure.{args.format}")
 
     print("Saving output...")
     save_output(mapped_structure, args.format, output_path)
