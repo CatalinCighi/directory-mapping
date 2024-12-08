@@ -1,0 +1,16 @@
+{
+    "/Users/c22/microservices/directory-mapping": {
+        "files": [
+            "requirements.txt",
+            "Dockerfile",
+            "structure.json",
+            "README.md",
+            "mapdir.py",
+            ".gitignore"
+        ],
+        "dirs": [
+            "venv-map",
+            "archive"
+        ]
+    }
+}
