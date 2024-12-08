@@ -5,7 +5,7 @@ This script maps the structure of a directory while respecting `.gitignore` rule
 ## Features
 - Automatically parses `.gitignore` to exclude ignored files and directories.
 - Outputs directory structure in `JSON`, `YAML`, or `XML` formats.
-- Saves the output to the user's home directory with the filename `structure.<format>`.
+- Saves the output to the script's working directory with the filename `structure.<format>`.
 
 ## Requirements
 - Python 3.x
