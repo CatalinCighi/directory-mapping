@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Directory and Format</title>
+    <script>
+        function handleFileSelect(event) {
+            // Get the first file from the file list
+            const fileInput = document.getElementById('directory');
+            const directoryPath = fileInput.files[0].webkitRelativePath.split('/')[0];  // Extract the directory name
+            document.getElementById('directory-path').value = directoryPath;
+        }
+    </script>
+</head>
+<body>
+    <h1>Select Directory and Format</h1>
+    <form method="POST">
+        <label for="directory">Directory Path:</label>
+        <input type="file" id="directory" name="directory" webkitdirectory required onchange="handleFileSelect(event)">
+        <br><br>
+
+        <!-- Hidden input to store directory path -->
+        <input type="hidden" id="directory-path" name="directory">
+
+        <label for="format">Select Output Format:</label>
+        <select id="format" name="format" required>
+            <option value="json">JSON</option>
+            <option value="csv">CSV</option>
+            <option value="txt">Text</option>
+        </select>
+        <br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
