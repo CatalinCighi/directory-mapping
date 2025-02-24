@@ -2,22 +2,14 @@
 
 This script maps the structure of a directory while respecting `.gitignore` rules and outputs the mapped structure in the specified format (`JSON`, `YAML`, or `XML`).
 
+
+
 ## Features
 - Automatically parses `.gitignore` to exclude ignored files and directories.
 - Outputs directory structure in `JSON`, `YAML`, or `XML` formats.
 - **Optionally specify the directory to map** using the `--directory` argument.
 - Saves the output in the mapped directory or the current working directory.
 
-## Requirements
-- Python 3.x
-- Required Python libraries:
-  - `pathspec`
-  - `yaml`
-
-Install the dependencies using:
-```bash
-pip install pathspec pyyaml
-```
 
 ## Usage
 ### Command-line Arguments
