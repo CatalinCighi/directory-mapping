@@ -1,0 +1,432 @@
+{
+    "/Users/c22/microservices/directory-mapping": {
+        "files": [
+            "LICENSE",
+            "requirements.txt",
+            "Dockerfile",
+            "README.md",
+            "mapdir.py",
+            ".gitignore",
+            "app.py"
+        ],
+        "dirs": [
+            "venv-map",
+            "archive",
+            "__pycache__",
+            "templates",
+            "dirmap",
+            ".git"
+        ]
+    },
+    "/Users/c22/microservices/directory-mapping/templates": {
+        "files": [
+            "index.html"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/dirmap": {
+        "files": [
+            "mapper.py",
+            "__init__.py",
+            "cli.py"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git": {
+        "files": [
+            "ORIG_HEAD",
+            "config",
+            "HEAD",
+            "description",
+            "index",
+            "COMMIT_EDITMSG",
+            "FETCH_HEAD"
+        ],
+        "dirs": [
+            "objects",
+            "info",
+            "logs",
+            "hooks",
+            "refs"
+        ]
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects": {
+        "files": [],
+        "dirs": [
+            "3c",
+            "0b",
+            "93",
+            "0e",
+            "be",
+            "bd",
+            "d6",
+            "e2",
+            "f4",
+            "f3",
+            "c9",
+            "e3",
+            "c1",
+            "4e",
+            "20",
+            "4b",
+            "pack",
+            "7c",
+            "87",
+            "17",
+            "7b",
+            "8f",
+            "8a",
+            "10",
+            "4c",
+            "26",
+            "5d",
+            "info",
+            "62",
+            "01",
+            "06",
+            "0a",
+            "90",
+            "a0",
+            "dc",
+            "aa",
+            "e1",
+            "cd",
+            "f1",
+            "79",
+            "1b",
+            "70",
+            "1c"
+        ]
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/3c": {
+        "files": [
+            "1210e3334abd59644712d213f9f190c0916a87"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/0b": {
+        "files": [
+            "6a7b979a729bef2b4a104786f663953ea1638d"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/93": {
+        "files": [
+            "a4eeedf5b5c55593d458e58501db71fa7e7d57"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/0e": {
+        "files": [
+            "b71512ba973e90b874dcada3035f80b4bbba7e",
+            "cf9a78602095b9ecf35ba1cbfa668913eec19e"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/be": {
+        "files": [
+            "0b8cf57a2f7847269490d91703c739426656f1"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/bd": {
+        "files": [
+            "3fdb25aae54e3f3e4660c21f08c8b06aa0685a"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/d6": {
+        "files": [
+            "929d1e86f70ed402259f76d4c47b3f3950b3e1"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/e2": {
+        "files": [
+            "789cac3662cceb56279ffc8f14b5b853bf46f5"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/f4": {
+        "files": [
+            "360450f59fca01a515460535d44fed95d1d53f"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/f3": {
+        "files": [
+            "1c78a393ad2a5dec3541b60300d57d052c43c0"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/c9": {
+        "files": [
+            "5d3051f619e5dd20cfe0322d9d4df1dda6757a"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/e3": {
+        "files": [
+            "909adc67fc930f1bf2e29f3b0b99166f901465"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/c1": {
+        "files": [
+            "5ed478251789ecfe10d73cb252a62b71623d94"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/4e": {
+        "files": [
+            "b0ffc1852a7574c4825a4786ad0be44100d0d3"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/20": {
+        "files": [
+            "07630fd9c647ebf13331b0d6b754ab1c9fcdcf"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/4b": {
+        "files": [
+            "825dc642cb6eb9a060e54bf8d69288fbee4904"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/7c": {
+        "files": [
+            "c64f7b9e3444c3f2becc748aea8cf3ae1d1c8a"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/87": {
+        "files": [
+            "c3a51cb6b98c2eeda735185386df382e0f0893"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/17": {
+        "files": [
+            "83424289d8202730118355ca78f8540ad40880"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/7b": {
+        "files": [
+            "88bae348c5d25ddd4ab879b7cd2b87cab91ced"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/8f": {
+        "files": [
+            "1e1ff584a52b83b1aace06bdde182375d0b850"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/8a": {
+        "files": [
+            "54851defd9be7c2742f4aed51edad468858526"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/10": {
+        "files": [
+            "af9974f11d1af84cd416ef1c560f232ad3ae52"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/4c": {
+        "files": [
+            "4c8bc7febac2fc7c07a28d84e2c469fd081d9f"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/26": {
+        "files": [
+            "fe6d42af625ff1b9185ce7e2904758f25f9f70"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/5d": {
+        "files": [
+            "4d5149744861df7aa8c6c6766f45a07e4868a7"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/62": {
+        "files": [
+            "7d3dc75a8d114ee69a65b22fd6f91213b20adb"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/01": {
+        "files": [
+            "9ef9453edc5ff5873432810bd03efe74a9e26a"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/06": {
+        "files": [
+            "ff51e40f0dce9c4830e7717baf370372fe10ab"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/0a": {
+        "files": [
+            "ae1ecb8c20454975c818e0951f1038175fa56c"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/90": {
+        "files": [
+            "986f5fde023a5fa32d940937083b49365d2fd4"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/a0": {
+        "files": [
+            "ec4ff8341b7e044a429fae848a35ec3f3a0436"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/dc": {
+        "files": [
+            "62bb3d1fab1e533f80f91bdb08ff1fefe98aae"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/aa": {
+        "files": [
+            "bf27f31bd1e6c41eb52d11dca67f17dac075ae"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/e1": {
+        "files": [
+            "0840f001f858a45b28912291023c96a052c9c2"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/cd": {
+        "files": [
+            "121deb39f53064b5004a621802e5e528b6cf2d"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/f1": {
+        "files": [
+            "45abd61539bdc16466b5ce851c39ca3dd59d0b"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/79": {
+        "files": [
+            "ecbb9471710b2b4035e30a63c57cd3159b2e19"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/1b": {
+        "files": [
+            "68d94ecd0dc92bb45c7722df8642e0afe836e1"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/70": {
+        "files": [
+            "9e8936f62e13e162800128c16d1b1169914f8d"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/objects/1c": {
+        "files": [
+            "6ab0cc6f47c606007badc861e11d1de93849e5"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/info": {
+        "files": [
+            "exclude"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/logs": {
+        "files": [
+            "HEAD"
+        ],
+        "dirs": [
+            "refs"
+        ]
+    },
+    "/Users/c22/microservices/directory-mapping/.git/logs/refs": {
+        "files": [],
+        "dirs": [
+            "heads",
+            "remotes"
+        ]
+    },
+    "/Users/c22/microservices/directory-mapping/.git/logs/refs/heads": {
+        "files": [
+            "main"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/logs/refs/remotes": {
+        "files": [],
+        "dirs": [
+            "origin"
+        ]
+    },
+    "/Users/c22/microservices/directory-mapping/.git/logs/refs/remotes/origin": {
+        "files": [
+            "main"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/hooks": {
+        "files": [
+            "commit-msg.sample",
+            "pre-rebase.sample",
+            "sendemail-validate.sample",
+            "pre-commit.sample",
+            "applypatch-msg.sample",
+            "fsmonitor-watchman.sample",
+            "pre-receive.sample",
+            "prepare-commit-msg.sample",
+            "post-update.sample",
+            "pre-merge-commit.sample",
+            "pre-applypatch.sample",
+            "pre-push.sample",
+            "update.sample",
+            "push-to-checkout.sample"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/refs": {
+        "files": [],
+        "dirs": [
+            "heads",
+            "tags",
+            "remotes"
+        ]
+    },
+    "/Users/c22/microservices/directory-mapping/.git/refs/heads": {
+        "files": [
+            "main"
+        ],
+        "dirs": []
+    },
+    "/Users/c22/microservices/directory-mapping/.git/refs/remotes": {
+        "files": [],
+        "dirs": [
+            "origin"
+        ]
+    },
+    "/Users/c22/microservices/directory-mapping/.git/refs/remotes/origin": {
+        "files": [
+            "main"
+        ],
+        "dirs": []
+    }
+}

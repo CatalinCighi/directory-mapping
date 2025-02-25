@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Collapsible, Zoomable, Draggable D3 Tree</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    .node circle {
+      fill: #999;
+      stroke: steelblue;
+      stroke-width: 1.5px;
+      cursor: pointer;
+    }
+    .node text {
+      font: 10px sans-serif;
+      user-select: none;
+    }
+    .link {
+      fill: none;
+      stroke: #555;
+      stroke-opacity: 0.4;
+      stroke-width: 1.5px;
+    }
+  </style>
+</head>
+<body>
+  <svg></svg>
+  <script>
+    // Adapt to the screen size
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    
+    // Global variables
+    let i = 0; // node id counter
+    let root;  // global root reference
+
+    // Select the SVG element and set its dimensions
+    const svg = d3.select("svg")
+      .attr("width", width)
+      .attr("height", height);
+    
+    // Create a container group for zooming/panning
+    const g = svg.append("g")
+      .attr("transform", "translate(40,0)");
+
+    // Set up zoom behavior
+    const zoom = d3.zoom()
+      .scaleExtent([0.1, 5])
+      .on("zoom", event => { g.attr("transform", event.transform); });
+    svg.call(zoom);
+
+    // Define the tree layout using the adapted width and height
+    const treeLayout = d3.tree().size([height, width - 160]);
+
+    // Define drag behavior
+    const drag = d3.drag()
+      .on("start", dragstarted)
+      .on("drag", dragged)
+      .on("end", dragended);
+
+    // Load the flat JSON and build the nested structure
+    d3.json("structure.json").then(flatData => {
+      // Define the root path (adjust as needed)
+      const rootPath = "/Users/c22/microservices/directory-mapping";
+      const nodesMap = {};
+      const treeData = { name: rootPath, children: [] };
+      nodesMap[rootPath] = treeData;
+
+      // Build a nested tree structure from the flat data
+      Object.keys(flatData).forEach(path => {
+        if (!nodesMap[path]) {
+          nodesMap[path] = { name: path, children: [] };
+        }
+        const entry = flatData[path];
+        // Add files as leaf nodes
+        if (entry.files) {
+          entry.files.forEach(file => {
+            nodesMap[path].children.push({ name: file });
+          });
+        }
+        // Add directories as nodes
+        if (entry.dirs) {
+          entry.dirs.forEach(dir => {
+            const subdirPath = path + "/" + dir;
+            if (!nodesMap[subdirPath]) {
+              nodesMap[subdirPath] = { name: subdirPath, children: [] };
+            }
+            nodesMap[path].children.push(nodesMap[subdirPath]);
+          });
+        }
+      });
+
+      // Convert the nested structure into a D3 hierarchy
+      root = d3.hierarchy(treeData);
+      root.x0 = height / 2;
+      root.y0 = 0;
+      
+      // Collapse all children of the root (starting collapsed)
+      if (root.children) {
+        root.children.forEach(collapseAll);
+      }
+      
+      update(root);
+    }).catch(err => {
+      console.error("Error loading JSON:", err);
+    });
+
+    // Recursively collapse a node and all its children
+    function collapseAll(d) {
+      if (d.children) {
+        d.children.forEach(collapseAll);
+        d._children = d.children;
+        d.children = null;
+      }
+    }
+
+    // Main update function to (re)draw the tree
+    function update(source) {
+      // Compute new tree layout positions.
+      treeLayout(root);
+      const nodes = root.descendants();
+      const links = root.links();
+
+      // Set horizontal spacing based on depth
+      nodes.forEach(d => { d.y = d.depth * 180; });
+
+      // --- NODES ---
+      const nodeSelection = g.selectAll("g.node")
+        .data(nodes, d => d.id || (d.id = ++i));
+
+      // Enter new nodes at the parent's old position.
+      const nodeEnter = nodeSelection.enter().append("g")
+        .attr("class", "node")
+        .attr("transform", () => `translate(${source.y0},${source.x0})`)
+        .on("click", (event, d) => {
+          // Toggle children on click: open only the next level.
+          if (d.children) {
+            d._children = d.children;
+            d.children = null;
+          } else {
+            d.children = d._children;
+            d._children = null;
+          }
+          update(d);
+        })
+        .call(drag);
+
+      nodeEnter.append("circle")
+        .attr("r", 4);
+
+      // Display only the last segment of the path as label.
+      nodeEnter.append("text")
+        .attr("dy", 3)
+        .attr("x", d => (d.children || d._children) ? -8 : 8)
+        .style("text-anchor", d => (d.children || d._children) ? "end" : "start")
+        .text(d => {
+          const segments = d.data.name.split('/');
+          const nonEmpty = segments.filter(s => s !== '');
+          return nonEmpty.length ? nonEmpty[nonEmpty.length - 1] : 'root';
+        });
+
+      // Update nodes: merge entering and existing nodes.
+      const nodeUpdate = nodeEnter.merge(nodeSelection);
+
+      // Transition nodes to their new positions.
+      nodeUpdate.transition()
+        .duration(500)
+        .attr("transform", d => `translate(${d.y},${d.x})`);
+
+      // Remove exiting nodes.
+      const nodeExit = nodeSelection.exit().transition()
+        .duration(500)
+        .attr("transform", d => `translate(${source.y},${source.x})`)
+        .remove();
+      nodeExit.select("circle").attr("r", 0);
+
+      // --- LINKS ---
+      const linkSelection = g.selectAll("path.link")
+        .data(links, d => d.target.id);
+
+      // Enter new links at the parent's old position.
+      const linkEnter = linkSelection.enter().insert("path", "g")
+        .attr("class", "link")
+        .attr("d", () => {
+          const o = { x: source.x0, y: source.y0 };
+          return diagonal(o, o);
+        });
+
+      // Transition links to their new positions.
+      linkEnter.merge(linkSelection)
+        .transition()
+        .duration(500)
+        .attr("d", d => diagonal(d.source, d.target));
+
+      // Remove exiting links.
+      linkSelection.exit().transition()
+        .duration(500)
+        .attr("d", () => {
+          const o = { x: source.x, y: source.y };
+          return diagonal(o, o);
+        })
+        .remove();
+
+      // Save the old positions for transition.
+      nodes.forEach(d => {
+        d.x0 = d.x;
+        d.y0 = d.y;
+      });
+    }
+
+    // Helper function to create a curved path from parent to child.
+    function diagonal(s, t) {
+      return `M ${s.y} ${s.x}
+              C ${(s.y + t.y) / 2} ${s.x},
+                ${(s.y + t.y) / 2} ${t.x},
+                ${t.y} ${t.x}`;
+    }
+
+    // ---- DRAG HANDLERS FOR REORDERING ----
+    function dragstarted(event, d) {
+      event.sourceEvent.stopPropagation();
+      d3.select(this).raise().select("circle").attr("stroke", "black");
+    }
+
+    function dragged(event, d) {
+      // Update the node's vertical position (x coordinate) as it's dragged.
+      d.x = event.y;
+      d3.select(this).attr("transform", `translate(${d.y},${d.x})`);
+    }
+
+    function dragended(event, d) {
+      d3.select(this).select("circle").attr("stroke", null);
+      // If the node has a parent, reorder among siblings.
+      if (d.parent) {
+        // Remove d from its parent's children array.
+        const siblings = d.parent.children.filter(s => s !== d);
+        // Determine new index: insert before the first sibling with an x greater than the final y position.
+        let targetIndex = siblings.findIndex(s => event.y < s.x);
+        if (targetIndex === -1) { targetIndex = siblings.length; }
+        // Remove d from its original position.
+        const currentIndex = d.parent.children.indexOf(d);
+        d.parent.children.splice(currentIndex, 1);
+        // Insert d at the new index.
+        d.parent.children.splice(targetIndex, 0, d);
+      }
+      // Re-run the layout update from the root.
+      update(root);
+    }
+  </script>
+</body>
+</html>
