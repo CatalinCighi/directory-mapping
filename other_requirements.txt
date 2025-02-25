@@ -1,7 +1,0 @@
-# Editable install with no version control (dirmap==0.1.0)
--e /Users/c22/microservices/dirmap
-numpy==2.2.3
-pathspec==0.12.1
-pyarrow==19.0.1
-pylance==0.23.1
-PyYAML==6.0.2
