@@ -172,7 +172,7 @@ def trim_paths(structure, base_dir):
     return trimmed
 
 
-def save_output(data, format_type, output_path, trim_paths_flag=False, base_dir=None):
+def save_output(data, format_type, output_path, trim_paths_flag=True, base_dir=None):
     """
     Save the mapped directory structure in the specified format.
 
@@ -180,7 +180,7 @@ def save_output(data, format_type, output_path, trim_paths_flag=False, base_dir=
         data (dict): Mapped directory structure
         format_type (str): Output format ('json', 'yaml', or 'xml')
         output_path (str): Path to save the output file
-        trim_paths_flag (bool): Whether to trim absolute paths to relative paths
+        trim_paths_flag (bool): Whether to trim absolute paths to relative paths. Defaults to True.
         base_dir (str): Base directory for relative paths (if trim_paths_flag is True)
 
     Returns:
@@ -228,7 +228,7 @@ def create_map(
     verbose=False,
     exclude_config=None,
     no_trim=False,
-    trim_paths_flag=False,
+    trim_paths_flag=True,  # Changed default to True
 ):
     """
     Main function that maps a directory and saves the output.
@@ -241,7 +241,7 @@ def create_map(
         exclude_config (str, optional): Path to a JSON config file with exclude patterns.
                                       If None, use the default config.
         no_trim (bool, optional): If True, do not trim the structure. Defaults to False.
-        trim_paths_flag (bool, optional): If True, convert absolute paths to relative. Defaults to False.
+        trim_paths_flag (bool, optional): If True, convert absolute paths to relative. Defaults to True.
 
     Returns:
         str: Path to the saved structure file

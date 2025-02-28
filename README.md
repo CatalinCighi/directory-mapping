@@ -1,12 +1,13 @@
 # dirmap - Directory Mapping Tool
 
-A Python package that maps the structure of a directory while respecting `.gitignore` rules and outputs the mapped structure in your chosen format (JSON, YAML, or XML). By default, it also trims the structure to exclude common unwanted patterns (like venv, .git, etc.).
+A Python package that maps the structure of a directory while respecting `.gitignore` rules and outputs the mapped structure in your chosen format (JSON, YAML, or XML). By default, it trims the structure to exclude common unwanted patterns (like venv, .git, etc.) and uses relative paths for better readability.
 
 
 ## Features
 
 - Maps directory structure in JSON, YAML, or XML formats
 - Automatically respects `.gitignore` rules
+- Uses relative paths by default for cleaner output
 - Automatically trims structures to exclude common patterns (like .git, venv, etc.)
 - Configurable exclude patterns via JSON configuration files
 - Simple command-line interface
@@ -19,7 +20,11 @@ A Python package that maps the structure of a directory while respecting `.gitig
 ```bash
 # Map the current directory in JSON format (default)
 # This will use the default exclude patterns to trim the structure
+# and use relative paths by default
 dirmap
+
+# Map using absolute paths instead of relative paths
+dirmap --full-paths
 
 # Map a specific directory in YAML format
 dirmap --directory /path/to/your/directory --format yaml

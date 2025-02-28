@@ -49,11 +49,11 @@ def main():
         help="Disable the default trimming of the directory structure",
     )
 
+    # Replace --trim-paths with --full-paths (inverse behavior)
     parser.add_argument(
-        "-t",
-        "--trim-paths",
+        "--full-paths",
         action="store_true",
-        help="Convert absolute paths to relative paths in the output",
+        help="Use absolute paths in the output instead of relative paths",
     )
 
     parser.add_argument(
@@ -105,8 +105,8 @@ def main():
             # Trim the structure
             trimmed_structure = mapper.trim_structure(structure, exclude_patterns)
 
-            # Apply path trimming if requested
-            if args.trim_paths:
+            # Apply path trimming by default unless full paths requested
+            if not args.full_paths:
                 # Determine base directory from first path
                 if trimmed_structure:
                     base_dir = os.path.dirname(next(iter(trimmed_structure.keys())))
@@ -132,7 +132,7 @@ def main():
             verbose=args.verbose,
             exclude_config=args.exclude_config,
             no_trim=args.no_trim,
-            trim_paths_flag=args.trim_paths,
+            trim_paths_flag=not args.full_paths,  # Invert the flag - default is now to trim
         )
 
         if output_path:

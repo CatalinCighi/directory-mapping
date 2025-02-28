@@ -92,12 +92,12 @@ def trim_paths(structure, base_dir):
     return trimmed
 
 
-def save_output(data, format_type, output_path, trim_paths_flag=False, base_dir=None):
+def save_output(data, format_type, output_path, trim_paths_flag=True, base_dir=None):
     """
     Save the mapped directory structure in the specified format.
     """
     try:
-        # Apply path trimming if requested
+        # Apply path trimming if requested (default behavior now)
         if trim_paths_flag and base_dir:
             data = trim_paths(data, base_dir)
 
@@ -150,10 +150,11 @@ def main():
         default=os.getcwd(),
         help="Path to the directory to map (default: current working directory)",
     )
+    # Replace --trim-paths with --full-paths (inverse behavior)
     parser.add_argument(
-        "--trim-paths",
+        "--full-paths",
         action="store_true",
-        help="Convert absolute paths to relative paths in the output",
+        help="Use absolute paths in the output instead of relative paths",
     )
     args = parser.parse_args()
 
@@ -168,7 +169,11 @@ def main():
 
     print("Saving output...")
     save_success = save_output(
-        mapped_structure, args.format, output_path, args.trim_paths, directory_to_map
+        mapped_structure,
+        args.format,
+        output_path,
+        not args.full_paths,  # Invert the flag: trim paths by default
+        directory_to_map,
     )
 
     if save_success:
