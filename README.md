@@ -1,25 +1,14 @@
 # dirmap - Directory Mapping Tool
 
-A Python package that maps the structure of a directory while respecting `.gitignore` rules and outputs the mapped structure in your chosen format (JSON, YAML, or XML).
+A Python package that maps the structure of a directory while respecting `.gitignore` rules and outputs the mapped structure in your chosen format (JSON, YAML, or XML). By default, it also trims the structure to exclude common unwanted patterns (like venv, .git, etc.).
 
-## Installation
-
-You can install the package directly from GitHub:
-
-```bash
-# Install directly from the repository
-pip install git+https://github.com/yourusername/dirmap.git
-
-# Or after cloning the repository
-git clone https://github.com/yourusername/dirmap.git
-cd dirmap
-pip install .
-```
 
 ## Features
 
 - Maps directory structure in JSON, YAML, or XML formats
 - Automatically respects `.gitignore` rules
+- Automatically trims structures to exclude common patterns (like .git, venv, etc.)
+- Configurable exclude patterns via JSON configuration files
 - Simple command-line interface
 - Can be used programmatically in other Python projects
 
@@ -29,10 +18,26 @@ pip install .
 
 ```bash
 # Map the current directory in JSON format (default)
+# This will use the default exclude patterns to trim the structure
 dirmap
 
 # Map a specific directory in YAML format
 dirmap --directory /path/to/your/directory --format yaml
+
+# Map without trimming (include everything)
+dirmap --no-trim
+
+# Map with a custom exclude patterns configuration
+dirmap --exclude-config my_exclude_patterns.json
+
+# Specify custom output path
+dirmap --output /path/to/output/structure.json
+
+# Trim an existing structure file with default exclude patterns
+dirmap --trim-file structure.json --output trimmed_structure.json
+
+# Trim an existing structure file with custom exclude patterns
+dirmap --trim-file structure.json --exclude-config my_exclude_patterns.json
 
 # Show verbose output
 dirmap --verbose
@@ -46,14 +51,51 @@ dirmap --help
 ```python
 from dirmap import mapper
 
-# Map the current directory
+# Map the current directory (with default trimming)
 output_path = mapper.create_map()
 
 # Map a specific directory in YAML format
 output_path = mapper.create_map(directory="/path/to/your/directory", output_format="yaml")
 
+# Map without trimming
+output_path = mapper.create_map(no_trim=True)
+
+# Map with custom exclude patterns configuration
+output_path = mapper.create_map(exclude_config="my_exclude_patterns.json")
+
 # Enable verbose logging
 output_path = mapper.create_map(verbose=True)
+```
+
+## Configuration
+
+The package uses a JSON configuration file to specify which patterns to exclude when trimming. A default configuration file is included with the package, but you can provide your own.
+
+### Default Exclude Patterns
+
+The default configuration excludes common patterns such as:
+- `.git` directories
+- Virtual environments (`venv`)
+- Python cache (`__pycache__`)
+- Package directories (`site-packages`)
+- And other common patterns
+
+### Custom Exclude Patterns
+
+You can create your own JSON configuration file with the following structure:
+
+```json
+{
+  "exclude_patterns": [
+    ".git",
+    "venv",
+    "__pycache__",
+    "node_modules",
+    "dist",
+    "build",
+    "*.egg-info"
+  ]
+}
 ```
 
 ## Output Examples
