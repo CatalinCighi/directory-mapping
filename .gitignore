@@ -8,6 +8,11 @@ archive/
 .DS_Store
 Thumbs.db
 
+
+# Git directories
+.git/
+.git
+
 # Python
 __pycache__/
 *.pyc
