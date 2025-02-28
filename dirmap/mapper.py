@@ -261,3 +261,126 @@ def create_map(
     else:
         logger.error("Failed to save directory structure")
         return None
+
+
+def trim_paths(structure, base_dir):
+    """
+    Convert absolute paths to relative paths in the structure dictionary.
+
+    Args:
+        structure (dict): The directory structure with absolute paths as keys
+        base_dir (str): The base directory to make paths relative to
+
+    Returns:
+        dict: A new structure with relative paths as keys
+    """
+    trimmed = {}
+    for path, content in structure.items():
+        # Convert absolute path to relative path
+        rel_path = os.path.relpath(path, base_dir)
+        # Use "." for the base directory itself
+        if rel_path == ".":
+            rel_path = os.path.basename(base_dir)
+        trimmed[rel_path] = content
+    return trimmed
+
+
+def save_output(data, format_type, output_path, trim_paths_flag=False, base_dir=None):
+    """
+    Save the mapped directory structure in the specified format.
+
+    Args:
+        data (dict): Mapped directory structure
+        format_type (str): Output format ('json', 'yaml', or 'xml')
+        output_path (str): Path to save the output file
+        trim_paths_flag (bool): Whether to trim absolute paths to relative paths
+        base_dir (str): Base directory for relative paths (if trim_paths_flag is True)
+
+    Returns:
+        bool: True if successful, False otherwise
+    """
+    try:
+        # Apply path trimming if requested
+        if trim_paths_flag and base_dir:
+            data = trim_paths(data, base_dir)
+
+        if format_type == "json":
+            with open(output_path, "w") as file:
+                json.dump(data, file, indent=4)
+            logging.info(f"Saved structure as JSON at {output_path}")
+
+        elif format_type == "yaml":
+            with open(output_path, "w") as file:
+                yaml.dump(data, file, default_flow_style=False)
+            logging.info(f"Saved structure as YAML at {output_path}")
+
+        elif format_type == "xml":
+            root = Element("structure")
+            for path, content in data.items():
+                dir_element = SubElement(root, "directory", {"path": path})
+                files_element = SubElement(dir_element, "files")
+                for file in content["files"]:
+                    SubElement(files_element, "file").text = file
+                dirs_element = SubElement(dir_element, "subdirectories")
+                for subdir in content["dirs"]:
+                    SubElement(dirs_element, "directory").text = subdir
+            tree = ElementTree(root)
+            tree.write(output_path)
+            logging.info(f"Saved structure as XML at {output_path}")
+
+        return True
+    except Exception as e:
+        logging.error(f"Error saving output: {e}")
+        return False
+
+
+# Update to mapper.py's create_map function
+def create_map(
+    directory=None, output_format="json", verbose=False, trim_paths_flag=False
+):
+    """
+    Map a directory and save the output.
+
+    Args:
+        directory (str, optional): Directory to map. Defaults to current working directory.
+        output_format (str, optional): Output format. Defaults to "json".
+        verbose (bool, optional): Enable verbose logging. Defaults to False.
+        trim_paths_flag (bool, optional): Trim absolute paths to relative paths. Defaults to False.
+
+    Returns:
+        str: Path to the saved structure file
+    """
+    # Set logging level based on verbosity
+    if verbose:
+        logging.getLogger().setLevel(logging.DEBUG)
+
+    # Set directory to map
+    directory_to_map = os.path.abspath(directory or os.getcwd())
+
+    # Path to gitignore file
+    gitignore_path = os.path.join(directory_to_map, ".gitignore")
+
+    logging.info(f"Starting directory mapping for {directory_to_map}...")
+
+    # Load gitignore patterns
+    pathspec = load_gitignore_patterns(gitignore_path)
+
+    # Map directory structure
+    mapped_structure = map_directory(directory_to_map, pathspec)
+
+    # Path to save output
+    output_path = os.path.join(directory_to_map, f"structure.{output_format}")
+
+    logging.info("Saving output...")
+
+    # Save output in specified format
+    save_success = save_output(
+        mapped_structure, output_format, output_path, trim_paths_flag, directory_to_map
+    )
+
+    if save_success:
+        logging.info(f"Process completed. Directory structure saved at {output_path}")
+        return output_path
+    else:
+        logging.error("Failed to save directory structure")
+        return None
