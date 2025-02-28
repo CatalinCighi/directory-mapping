@@ -50,6 +50,13 @@ def main():
     )
 
     parser.add_argument(
+        "-t",
+        "--trim-paths",
+        action="store_true",
+        help="Convert absolute paths to relative paths in the output",
+    )
+
+    parser.add_argument(
         "--exclude-config",
         type=str,
         help="Path to a JSON configuration file with exclude patterns",
@@ -98,6 +105,14 @@ def main():
             # Trim the structure
             trimmed_structure = mapper.trim_structure(structure, exclude_patterns)
 
+            # Apply path trimming if requested
+            if args.trim_paths:
+                # Determine base directory from first path
+                if trimmed_structure:
+                    base_dir = os.path.dirname(next(iter(trimmed_structure.keys())))
+                    trimmed_structure = mapper.trim_paths(trimmed_structure, base_dir)
+                    print(f"Applied path trimming relative to {base_dir}")
+
             # Save the trimmed structure
             with open(output_file, "w") as f:
                 json.dump(trimmed_structure, f, indent=4)
@@ -117,6 +132,7 @@ def main():
             verbose=args.verbose,
             exclude_config=args.exclude_config,
             no_trim=args.no_trim,
+            trim_paths_flag=args.trim_paths,
         )
 
         if output_path:
