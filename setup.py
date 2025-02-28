@@ -1,11 +1,21 @@
 from setuptools import setup, find_packages
+import os
+import re
+
+# Read version from __init__.py
+with open(os.path.join("dirmap", "__init__.py"), "r", encoding="utf-8") as f:
+    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]", f.read(), re.M)
+    if version_match:
+        version = version_match.group(1)
+    else:
+        raise RuntimeError("Unable to find version string in __init__.py")
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
     name="dirmap",
-    version="0.1.0",
+    version=version,
     author="Catalin cighi",
     author_email="catalin.cighil@gmail.com",
     description="Map directory structure respecting .gitignore rules",

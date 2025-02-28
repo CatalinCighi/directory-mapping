@@ -1,0 +1,20 @@
+{
+    "exclude_patterns": [
+      ".git",
+      "venv",
+      "__pycache__",
+      ".ipynb_checkpoints",
+      "site-packages",
+      ".dist-info",
+      "pip-",
+      "numpy",
+      "pandas",
+      "dateutil",
+      "tzdata",
+      "pytz",
+      "six-",
+      "dirmap",
+      "lib/python",
+      "bin/"
+    ]
+  }
